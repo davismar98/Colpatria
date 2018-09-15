@@ -8,13 +8,28 @@
     tools:context="com.example.davis.colpatria.MainActivity"
     tools:showIn="@layout/activity_main">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,27 +63,26 @@
                 android:lines="1"
                 android:paddingLeft="10dp" />
 
-    <!--<Button android:id="@+id/btn_send"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@null"
-        android:text="ASK"
-        android:textSize="16dp"
-        android:textColor="@color/colorPrimary" />
--->
-<android.support.v7.widget.AppCompatImageButton
-    android:id="@+id/btn_send"
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
-    android:layout_weight="1"
-    android:background="@null"
-    android:elevation="0dp"
-    android:paddingLeft="10dp"
-    android:scaleType="fitCenter"
-    android:src="@mipmap/ic_send" />
+            <!--<Button android:id="@+id/btn_send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="ASK"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimary" />-->
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/btn_send"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:elevation="0dp"
+            android:paddingLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_send" />
 
 
-</LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
