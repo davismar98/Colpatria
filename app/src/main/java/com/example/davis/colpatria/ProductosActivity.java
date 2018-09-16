@@ -35,11 +35,20 @@ public class ProductosActivity extends AppCompatActivity implements ClickListene
     @Override
     public void onClick(View view, int position) {
         Producto pSelected = listProductos.get(position);
+        Intent i = new Intent(ProductosActivity.this, ProdDes.class);
+        i.putExtra("nombre", pSelected.getNombre());
+        i.putExtra("url", pSelected.getUrl());
+        i.putExtra("puntos", pSelected.getPuntos());
+        i.putExtra("desc", pSelected.getDescripcion());
+        startActivity(i);
+
+
     }
 
     @Override
     public void onLongClick(View view, int position) {
-
+        Intent myintent = new Intent(ProductosActivity.this, ProdDes.class);
+        startActivity(myintent);
     }
 
     ArrayList<Producto> listProductos;
@@ -49,7 +58,7 @@ public class ProductosActivity extends AppCompatActivity implements ClickListene
 
 
     ListView sListView;
-    int[] images ={R.drawable.alisador,R.drawable.escoba,R.drawable.licudora,R.drawable.vaso};
+    //int[] images ={R.drawable.alisador,R.drawable.escoba,R.drawable.licudora,R.drawable.vaso};
     String [] Names = {"Alisador","escoba","Licuadora","Vaso"};
     String [] Puntos = {"300 pts","250 pts","600 pts","400 pts"};
 
@@ -63,6 +72,7 @@ public class ProductosActivity extends AppCompatActivity implements ClickListene
         addProductos();
 
         adapterProductos = new AdapterProductos(this, listProductos);
+        adapterProductos.setClickListener(this);
         gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapterProductos);

@@ -34,7 +34,8 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".catalog" />
-        <activity android:name=".ProductosActivity"></activity>
+        <activity android:name=".ProductosActivity" />
+        <activity android:name=".ProdDes"></activity>
     </application>
 
 </manifest>
