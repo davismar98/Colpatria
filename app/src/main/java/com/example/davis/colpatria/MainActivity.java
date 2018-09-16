@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -49,12 +50,21 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.RecognizeCallb
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private RecyclerView recyclerView;
@@ -88,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MicrophoneHelper microphoneHelper;
     private Logger myLogger;
 
+    private String username;
+    private String puntos;
 
 
     @Override
@@ -96,6 +108,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle.getString("username")!= null)
+        {
+            username = bundle.getString("username");
+            //TODO here get the string stored in the string variable and do
+            // setText() on userName
+        }
+        if(bundle.getString("puntos")!= null)
+        {
+            puntos = bundle.getString("puntos");
+            //TODO here get the string stored in the string variable and do
+            // setText() on userName
+        }
 
         mContext = getApplicationContext();
         conversation_username = mContext.getString(R.string.conversation_username);
@@ -111,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //IBM Cloud Mobile Analytics
         BMSClient.getInstance().initialize(getApplicationContext(), BMSClient.REGION_US_SOUTH);
         //Analytics is configured to record lifecycle events.
-        Analytics.init(getApplication(), "WatBot", analytics_APIKEY, false,false, Analytics.DeviceEvent.ALL);
+        Analytics.init(getApplication(), "WatBot", analytics_APIKEY, false, false, Analytics.DeviceEvent.ALL);
         //Analytics.send();
         myLogger = Logger.getLogger("myLogger");
         // Send recorded usage analytics to the Mobile Analytics Service
@@ -142,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         inputMessage = (EditText) findViewById(R.id.message);
         btnSend = (ImageButton) findViewById(R.id.btn_send);
-        btnRecord= (ImageButton) findViewById(R.id.btn_record);
+        btnRecord = (ImageButton) findViewById(R.id.btn_record);
         String customFont = "Montserrat-Regular.ttf";
         //Typeface typeface = Typeface.createFromAsset(getAssets(), customFont);
         //inputMessage.setTypeface(typeface);
@@ -193,9 +220,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Message audioMessage;
                         try {
 
-                            audioMessage =(Message) messageArrayList.get(position);
+                            audioMessage = (Message) messageArrayList.get(position);
                             streamPlayer = new StreamPlayer();
-                            if(audioMessage != null && !audioMessage.getMessage().isEmpty())
+                            if (audioMessage != null && !audioMessage.getMessage().isEmpty())
                                 //Change the Voice format and choose from the available choices
                                 streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_ENRIQUE).execute());
                             else
@@ -216,10 +243,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }));
 
-        btnSend.setOnClickListener(new View.OnClickListener(){
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkInternetConnection()) {
+                if (checkInternetConnection()) {
                     sendMessage();
                 }
             }
@@ -231,15 +258,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 recordMessage();
             }
         });
-    };
+
+        //enviamos los puntos al bot
+        sendInitialMessage();
+    }
+
+
 
     // Speech-to-Text Record Audio permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
             case RECORD_REQUEST_CODE: {
 
@@ -260,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }
-       // if (!permissionToRecordAccepted ) finish();
+        // if (!permissionToRecordAccepted ) finish();
 
     }
 
@@ -274,28 +306,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void sendMessage() {
 
         final String inputmessage = this.inputMessage.getText().toString().trim();
-        if(!this.initialRequest) {
+        if (!this.initialRequest) {
             Message inputMessage = new Message();
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("1");
             messageArrayList.add(inputMessage);
             myLogger.info("Sending a message to Watson Conversation Service");
 
-        }
-        else
-        {
+        } else {
             Message inputMessage = new Message();
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("100");
             this.initialRequest = false;
-            Toast.makeText(getApplicationContext(),"Tap on the message for Voice", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Tap on the message for Voice", Toast.LENGTH_LONG).show();
 
         }
 
         this.inputMessage.setText("");
         mAdapter.notifyDataSetChanged();
 
-        Thread thread = new Thread(new Runnable(){
+        Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
 
@@ -306,21 +336,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     MessageResponse response = service.message(options).execute();
 
                     //Passing Context of last conversation
-                    if(response.getContext() !=null)
-                    {
+                    if (response.getContext() != null) {
                         //context.clear();
                         context = response.getContext();
 
                     }
-                    final Message outMessage=new Message();
-                    if(response!=null)
-                    {
-                        if(response.getOutput()!=null && response.getOutput().containsKey("text"))
-                        {
+                    final Message outMessage = new Message();
+                    if (response != null) {
+                        if (response.getOutput() != null && response.getOutput().containsKey("text")) {
 
                             ArrayList responseList = (ArrayList) response.getOutput().get("text");
-                            if(null !=responseList && responseList.size()>0){
-                                outMessage.setMessage((String)responseList.get(0));
+                            if (null != responseList && responseList.size() > 0) {
+                                outMessage.setMessage((String) responseList.get(0));
                                 outMessage.setId("2");
                             }
                             messageArrayList.add(outMessage);
@@ -331,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                                         audioMessage = outMessage;
                                         streamPlayer = new StreamPlayer();
-                                        if(audioMessage != null && !audioMessage.getMessage().isEmpty())
+                                        if (audioMessage != null && !audioMessage.getMessage().isEmpty())
                                             //Change the Voice format and choose from the available choices
                                             streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_ENRIQUE).execute());
                                         else
@@ -349,7 +376,99 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void run() {
                                 mAdapter.notifyDataSetChanged();
                                 if (mAdapter.getItemCount() > 1) {
-                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount()-1);
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
+
+                                }
+
+                            }
+                        });
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+
+    }
+
+    private void sendInitialMessage() {
+
+        final String inputmessage = puntos.trim();
+        if (!this.initialRequest) {
+            Message inputMessage = new Message();
+            inputMessage.setMessage(inputmessage);
+            inputMessage.setId("1");
+            //messageArrayList.add(inputMessage);
+            myLogger.info("Sending a message to Watson Conversation Service");
+
+        } else {
+            Message inputMessage = new Message();
+            inputMessage.setMessage(inputmessage);
+            inputMessage.setId("100");
+            this.initialRequest = false;
+            Toast.makeText(getApplicationContext(), "Tap on the message for Voice", Toast.LENGTH_LONG).show();
+
+        }
+
+        this.inputMessage.setText("");
+        mAdapter.notifyDataSetChanged();
+
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                try {
+
+                    Conversation service = new Conversation(Conversation.VERSION_DATE_2016_09_20);
+                    service.setUsernameAndPassword(conversation_username, conversation_password);
+                    InputData input = new InputData.Builder(inputmessage).build();
+                    MessageOptions options = new MessageOptions.Builder(workspace_id).input(input).context(context).build();
+                    MessageResponse response = service.message(options).execute();
+
+                    //Passing Context of last conversation
+                    if (response.getContext() != null) {
+                        //context.clear();
+                        context = response.getContext();
+
+                    }
+                    final Message outMessage = new Message();
+                    if (response != null) {
+                        if (response.getOutput() != null && response.getOutput().containsKey("text")) {
+
+                            ArrayList responseList = (ArrayList) response.getOutput().get("text");
+                            if (null != responseList && responseList.size() > 0) {
+                                outMessage.setMessage((String) responseList.get(0));
+                                outMessage.setId("2");
+                            }
+                            messageArrayList.add(outMessage);
+                            Thread thread = new Thread(new Runnable() {
+                                public void run() {
+                                    Message audioMessage;
+                                    try {
+
+                                        audioMessage = outMessage;
+                                        streamPlayer = new StreamPlayer();
+                                        if (audioMessage != null && !audioMessage.getMessage().isEmpty())
+                                            //Change the Voice format and choose from the available choices
+                                            streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_ENRIQUE).execute());
+                                        else
+                                            streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_ENRIQUE).execute());
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            thread.start();
+                        }
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                mAdapter.notifyDataSetChanged();
+                                if (mAdapter.getItemCount() > 1) {
+                                    recyclerView.getLayoutManager().smoothScrollToPosition(recyclerView, null, mAdapter.getItemCount() - 1);
 
                                 }
 
@@ -375,7 +494,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         speechService.setUsernameAndPassword(STT_username, STT_password);
 
 
-        if(listening != true) {
+        if (listening != true) {
             capture = microphoneHelper.getInputStream(true);
             new Thread(new Runnable() {
                 @Override
@@ -388,13 +507,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }).start();
             listening = true;
-            Toast.makeText(MainActivity.this,"Listening....Click to Stop", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Listening....Click to Stop", Toast.LENGTH_LONG).show();
 
         } else {
             try {
                 microphoneHelper.closeInputStream();
                 listening = false;
-                Toast.makeText(MainActivity.this,"Stopped Listening....Click to Start", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Stopped Listening....Click to Start", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -404,22 +523,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Check Internet Connection
+     *
      * @return
      */
     private boolean checkInternetConnection() {
         // get Connectivity Manager object to check connection
         ConnectivityManager cm =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
 
         // Check for network connections
-        if (isConnected){
+        if (isConnected) {
             return true;
-        }
-        else {
+        } else {
             Toast.makeText(this, " No Internet Connection available ", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -431,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return new RecognizeOptions.Builder()
                 //.continuous(true)
                 .contentType(ContentType.OPUS.toString())
-                //.model("en-UK_NarrowbandModel")
+                .model("es-ES_NarrowbandModel")
                 .interimResults(true)
                 .inactivityTimeout(2000)
                 //TODO: Uncomment this to enable Speaker Diarization
@@ -452,7 +571,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
             }*/
-            if(speechResults.getResults() != null && !speechResults.getResults().isEmpty()) {
+            if (speechResults.getResults() != null && !speechResults.getResults().isEmpty()) {
                 String text = speechResults.getResults().get(0).getAlternatives().get(0).getTranscript();
                 showMicText(text);
             }
@@ -592,6 +711,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 }
+
 
 
 

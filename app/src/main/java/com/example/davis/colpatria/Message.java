@@ -36,6 +36,20 @@ public class Message implements Serializable {
         this.message = message;
     }
 
+    public boolean isImages(){
+
+        if(this != null){
+            String[] parts = this.getMessage().split("_");
+            if(parts.length>1){
+                return true;
+            }else
+                return false;
+        }
+        return false;
+    }
+
+
+
 
 }
 
