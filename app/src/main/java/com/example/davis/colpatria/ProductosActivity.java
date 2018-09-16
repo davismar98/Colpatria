@@ -35,6 +35,7 @@ public class ProductosActivity extends AppCompatActivity implements ClickListene
     @Override
     public void onClick(View view, int position) {
         Producto pSelected = listProductos.get(position);
+        Toast.makeText(this, pSelected.getNombre(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -47,12 +48,6 @@ public class ProductosActivity extends AppCompatActivity implements ClickListene
     RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
 
-
-    ListView sListView;
-    int[] images ={R.drawable.alisador,R.drawable.escoba,R.drawable.licudora,R.drawable.vaso};
-    String [] Names = {"Alisador","escoba","Licuadora","Vaso"};
-    String [] Puntos = {"300 pts","250 pts","600 pts","400 pts"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +58,7 @@ public class ProductosActivity extends AppCompatActivity implements ClickListene
         addProductos();
 
         adapterProductos = new AdapterProductos(this, listProductos);
+        adapterProductos.setClickListener(this);
         gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapterProductos);
