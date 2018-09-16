@@ -1,9 +1,13 @@
 package com.example.davis.colpatria;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,92 +16,69 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ProductosActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class ProductosActivity extends AppCompatActivity implements ClickListener{
+    @Override
+    public void onClick(View view, int position) {
+        Producto pSelected = listProductos.get(position);
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+
+    }
+
+    ArrayList<Producto> listProductos;
+    AdapterProductos adapterProductos;
+    RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+
 
     ListView sListView;
+    int[] images ={R.drawable.alisador,R.drawable.escoba,R.drawable.licudora,R.drawable.vaso};
+    String [] Names = {"Alisador","escoba","Licuadora","Vaso"};
+    String [] Puntos = {"300 pts","250 pts","600 pts","400 pts"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productos);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        recyclerView = findViewById(R.id.recycler_view);
 
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        addProductos();
 
-        sListView = findViewById(R.id.list);
+        adapterProductos = new AdapterProductos(this, listProductos);
+        gridLayoutManager = new GridLayoutManager(this,2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(adapterProductos);
 
-        CustomAdapter customAdapter =new CustomAdapter();
-        sListView.setAdapter(customAdapter);
-        sListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView adapterView, View view, int i, long l) {
-                switch (i) {
-                    /*case 0:  Intent myintent = new Intent(MainActivity.this, Info.class);
-                        startActivity(myintent);
-                        break;
-                    case 1:  Intent myintent1 = new Intent(MainActivity.this, Info2.class);
-                        startActivity(myintent1);
-                        break;
-                    case 2:  Intent myintent2 = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(myintent2);
-                        break;
-                    case 3:  Intent myintent3 = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(myintent3);
-                        break;*/
-                }
+        //sListView = findViewById(R.id.list);
 
-            }
-        });
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
+    public void addProductos(){
+        listProductos = new ArrayList<>();
+        Producto p = new Producto("Alisador", "https://home.ripley.cl/store/Attachment/WOP/D200/2000331399505/2000331399505_2.jpg", "1200", "Alisador para el cabello marca X de alta calidad.");
+        Producto p2 = new Producto("Escoba", "https://www.smartnfinal.com.mx/wp-content/uploads/2017/09/6061-Escoba-Cali-Clean.jpg", "2300", "Escoba con palo de madera adsadfadf.");
+        listProductos.add(p);
+        listProductos.add(p2);
 
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
-    class CustomAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return 0; //images.length;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            View view1 = getLayoutInflater().inflate(R.layout.customlayout, null);
-
-            ImageView sImageView =view1.findViewById(R.id.imageView);
-            TextView mTextVIew = view1.findViewById(R.id.TextView);
-            TextView sTextVIew = view1.findViewById(R.id.TextView1);
-
-            //sImageView.setImageResource(images[i]);
-            //mTextVIew.setText(Names[i]);
-            //sTextVIew.setText(Puntos[i]);
-
-            return view1;
-        }
-    }
 }
