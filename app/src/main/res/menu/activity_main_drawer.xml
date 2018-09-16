@@ -3,22 +3,22 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Recientes"
+            android:id="@+id/nav_puntos"
+            android:icon="@drawable/ic_bubble_chart_black_24dp"
+            android:title="Puntos"
             />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Comparar" />
+            android:id="@+id/nav_scotty"
+            android:icon="@drawable/ic_face_black_24dp"
+            android:title="Scotty" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_catalogo"
+            android:icon="@drawable/ic_view_carousel_black_24dp"
+            android:title="Catálogo" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Tools" />
+            android:id="@+id/nav_historial"
+            android:icon="@drawable/ic_timeline_black_24dp"
+            android:title="Historial" />
     </group>
 
     <item android:title="Communicate">
@@ -26,7 +26,7 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Share" />
+                android:title="Ayuda" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_slideshow"

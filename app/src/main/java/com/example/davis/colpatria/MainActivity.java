@@ -2,17 +2,13 @@ package com.example.davis.colpatria;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +19,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -50,17 +45,8 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.RecognizeCallb
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -676,7 +662,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_puntos) {
             /*FragmentVerTodos fragmentVerTodos = new FragmentVerTodos();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction()
@@ -695,9 +681,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             fragmentSeleccionComparar.getTag())
                     .commit();*/
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_catalogo) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_historial) {
 
         } else if (id == R.id.nav_share) {
 
