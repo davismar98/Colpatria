@@ -8,46 +8,99 @@
     android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context=".ProdDes">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity=""
+        >
+        <TextView
+            android:id="@+id/puntosView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Tiene 2 puntos"
+            android:gravity="center"
+            >
+
+        </TextView>
+
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="130dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView2"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="78dp"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:text="Muestrale esta pantalla al cajero autorizado para redimir tu producto"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton21"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="240dp"
+        >
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginRight="200dp"
+            android:textSize="15dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:text="Descripcion de producto"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+             />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_marginLeft="200dp"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:text="Valor: 10000"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+
+    </RelativeLayout>
+
 
     <ImageButton
         android:id="@+id/imageButton21"
-        style="@android:style/Widget.ImageButton"
-        android:layout_width="175dp"
-        android:layout_height="93dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignEnd="@+id/seekBar3"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/cerclebackgroundpurple"
+        android:src="@drawable/ic_payment_black_24dp"></ImageButton>
+
+    <SeekBar
+        android:id="@+id/seekBar3"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="333dp"
+        android:layout_height="73dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/fle" />
+        android:layout_marginBottom="144dp"
+        android:max="10"
+        android:progress="3" />
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
+        android:id="@+id/puntosPagar"
+        android:layout_width="198dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:text="Se restaran 300 pts"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        android:layout_alignStart="@+id/seekBar3"
+        android:layout_alignTop="@+id/imageButton21"
+        android:layout_marginStart="15dp"
+        android:text="PuntosPagar" />
+
+    <TextView
+        android:id="@+id/plataPagar"
+        android:layout_width="201dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/puntosPagar"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="41dp"
+        android:text="plataPagar" />
+
 </RelativeLayout>
