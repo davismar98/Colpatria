@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +21,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -86,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private String username;
     private String puntos;
+    private String nombre;
+    private String apellido;
+
+    catalog fragmentCatalog = new catalog();
 
 
     @Override
@@ -94,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         Bundle bundle = getIntent().getExtras();
 
@@ -106,6 +115,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(bundle.getString("puntos")!= null)
         {
             puntos = bundle.getString("puntos");
+            //TODO here get the string stored in the string variable and do
+            // setText() on userName
+        }
+        if(bundle.getString("nombre")!= null)
+        {
+            nombre = bundle.getString("nombre");
+            //TODO here get the string stored in the string variable and do
+            // setText() on userName
+        }
+        if(bundle.getString("apellido")!= null)
+        {
+            apellido = bundle.getString("apellido");
             //TODO here get the string stored in the string variable and do
             // setText() on userName
         }
@@ -182,6 +203,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menu = navigationView.getMenu();
+
+        MenuItem puntosItem = menu.findItem(R.id.nav_puntos);
+        puntosItem.setTitle("Tienes "+puntos);
 
 
         //Watson Text-to-Speech Service on Bluemix
@@ -663,13 +689,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_puntos) {
-            /*FragmentVerTodos fragmentVerTodos = new FragmentVerTodos();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction()
-                    .replace(R.id.constraint_layout_fragment,
-                            fragmentVerTodos,
-                            fragmentVerTodos.getTag())
-                    .commit();
+            getSupportFragmentManager().beginTransaction().remove(fragmentCatalog).commit();
+
+
+
+
+            /*
 
         } else if (id == R.id.nav_gallery) {
 
@@ -681,7 +706,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             fragmentSeleccionComparar.getTag())
                     .commit();*/
 
-        } else if (id == R.id.nav_catalogo) {
+        } else if (id == R.id.nav_scotty) {
+            getSupportFragmentManager().beginTransaction().remove(fragmentCatalog).commit();
+        }else if (id == R.id.nav_catalogo) {
+
+
+
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction()
+                    .replace(R.id.relative_layout_bot,
+                            fragmentCatalog,
+                            fragmentCatalog.getTag())
+                    .commit();
+
 
         } else if (id == R.id.nav_historial) {
 

@@ -69,11 +69,15 @@ public class LoginActivity extends AppCompatActivity {
             JSONArray ja = null;
             try {
                 ja = new JSONArray(result);
-                String nom= ja.getString(0);
-                Toast.makeText(LoginActivity.this, nom, Toast.LENGTH_SHORT).show();
+                String puntos= ja.getString(0);
+                String nombre = ja.getString(1);
+                String apellido = ja.getString(2);
+                //Toast.makeText(LoginActivity.this, nom, Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 i.putExtra("user", username.getText().toString());
-                i.putExtra("puntos", nom);
+                i.putExtra("puntos", puntos);
+                i.putExtra("nombre", nombre);
+                i.putExtra("apellido", apellido);
                 startActivity(i);
                 finish();
 

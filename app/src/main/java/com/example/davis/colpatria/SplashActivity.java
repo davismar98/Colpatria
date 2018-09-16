@@ -11,8 +11,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("user", "Oscar");
+        i.putExtra("user", "Oscararc");
         i.putExtra("puntos", "13320");
+        i.putExtra("nombre", "Oscar");
+        i.putExtra("apellido", "Arcos");
         startActivity(i);
         finish();
     }
