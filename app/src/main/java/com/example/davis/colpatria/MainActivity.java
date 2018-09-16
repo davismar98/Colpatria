@@ -464,9 +464,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         streamPlayer = new StreamPlayer();
                                         if (audioMessage != null && !audioMessage.getMessage().isEmpty())
                                             //Change the Voice format and choose from the available choices
-                                            streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_ENRIQUE).execute());
+                                            streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_LAURA).execute());
                                         else
-                                            streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_ENRIQUE).execute());
+                                            streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_LAURA).execute());
 
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -519,13 +519,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }).start();
             listening = true;
-            Toast.makeText(MainActivity.this, "Listening....Click to Stop", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Habla... te escucho. Clic en el micrófono para parar.", Toast.LENGTH_LONG).show();
 
         } else {
             try {
                 microphoneHelper.closeInputStream();
                 listening = false;
-                Toast.makeText(MainActivity.this, "Stopped Listening....Click to Start", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Se ha parado la grabación. Clic en el micrófono para grabar.", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }

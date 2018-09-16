@@ -63,9 +63,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         Message message = messageArrayList.get(position);
 
-        if(message.getMessage() == ""){
-
-        }else {
             if (message.getMessage() != null) {
                 String[] parts = message.getMessage().split("_");
 
@@ -75,26 +72,47 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     //message.setMessage(parts[0]);
                     ((ViewHolder) holder).message.setVisibility(View.GONE);
                     Glide.with(((ViewHolder) holder).img1.getContext())
-                            .load("https://www.gizbot.com/images/2018-02/apple-iphone-xe-2018-concept-design_151851336080.jpg")
+                            .load(getUrl(parts[0]))
                             .into(((ViewHolder) holder).img1);
                     Glide.with(((ViewHolder) holder).img2.getContext())
-                            .load("https://media.tracfone.com/wps/contenthandler/dav/content/libraries/wcm.library.phones/components/STSAG960U1C/wcm.comps.image/st_ecom_large_1.png")
+                            .load(getUrl(parts[1]))
                             .into(((ViewHolder) holder).img2);
                     Glide.with(((ViewHolder) holder).img3.getContext())
-                            .load("https://cdn2.gsmarena.com/vv/bigpic/xiaomi-mi-mix2-new.jpg")
+                            .load(getUrl(parts[2]))
                             .into(((ViewHolder) holder).img3);
                     //((ViewHolder) holder).message.setText(parts[0]);
                 } else {
-                    ((ViewHolder) holder).message.setVisibility(View.VISIBLE);
-                    message.setMessage(message.getMessage());
-                    ((ViewHolder) holder).message.setText(message.getMessage());
+                    if(!message.getMessage().equals("")){
+                        ((ViewHolder) holder).message.setVisibility(View.VISIBLE);
+                        message.setMessage(message.getMessage());
+                        ((ViewHolder) holder).message.setText(message.getMessage());
+                    }
+
 
                 }
             }
-        }
 
         /*message.setMessage(message.getMessage());
         ((ViewHolder) holder).message.setText(message.getMessage());*/
+    }
+
+    public String getUrl(String key){
+        String url = "https://screenshotlayer.com/images/assets/placeholder.png";
+        if(key.equals("Apple")){
+            url = "https://www.gizbot.com/images/2018-02/apple-iphone-xe-2018-concept-design_151851336080.jpg";
+        }else if(key.equals("Samsung")){
+            url = "https://media.tracfone.com/wps/contenthandler/dav/content/libraries/wcm.library.phones/components/STSAG960U1C/wcm.comps.image/st_ecom_large_1.png";
+        }else if(key.equals("Xiaomi")){
+            url = "https://cdn2.gsmarena.com/vv/bigpic/xiaomi-mi-mix2-new.jpg";
+        }else if(key.equals("Samsung")){
+            url = "https://media.tracfone.com/wps/contenthandler";
+        }else if(key.equals("Panasonic")){
+            url = "https://media.tracfone.com/wps/contenthandle";
+        }else if(key.equals("LG")){
+            url = "https://media.tracfone.com/wps/contenthandle";
+        }
+
+        return url;
     }
 
     @Override
