@@ -236,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             streamPlayer = new StreamPlayer();
                             if (audioMessage != null && !audioMessage.getMessage().isEmpty())
                                 //Change the Voice format and choose from the available choices
-                                streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_ENRIQUE).execute());
+                                streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_LAURA).execute());
                             else
-                                streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_ENRIQUE).execute());
+                                streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_LAURA).execute());
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("100");
             this.initialRequest = false;
-            Toast.makeText(getApplicationContext(), "Tap on the message for Voice", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Tap on the message for Voice", Toast.LENGTH_LONG).show();
 
         }
 
@@ -372,9 +372,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         streamPlayer = new StreamPlayer();
                                         if (audioMessage != null && !audioMessage.getMessage().isEmpty())
                                             //Change the Voice format and choose from the available choices
-                                            streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_ENRIQUE).execute());
+                                            streamPlayer.playStream(textToSpeech.synthesize(audioMessage.getMessage(), Voice.ES_LAURA).execute());
                                         else
-                                            streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_ENRIQUE).execute());
+                                            streamPlayer.playStream(textToSpeech.synthesize("No Text Specified", Voice.ES_LAURA).execute());
 
                                     } catch (Exception e) {
                                         e.printStackTrace();
