@@ -38,8 +38,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="54dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/fle" />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/textView7"
@@ -50,4 +49,5 @@
         android:layout_marginTop="23dp"
         android:text="Se restaran 300 pts"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
 </RelativeLayout>

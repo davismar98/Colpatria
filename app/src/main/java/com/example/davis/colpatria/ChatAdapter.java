@@ -104,12 +104,24 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             url = "https://media.tracfone.com/wps/contenthandler/dav/content/libraries/wcm.library.phones/components/STSAG960U1C/wcm.comps.image/st_ecom_large_1.png";
         }else if(key.equals("Xiaomi")){
             url = "https://cdn2.gsmarena.com/vv/bigpic/xiaomi-mi-mix2-new.jpg";
-        }else if(key.equals("Samsung")){
-            url = "https://media.tracfone.com/wps/contenthandler";
+        }else if(key.equals("Samsungt")){
+            url = "https://5.imimg.com/data5/EA/JR/MY-37593200/w-500x500.jpg";
         }else if(key.equals("Panasonic")){
-            url = "https://media.tracfone.com/wps/contenthandle";
+            url = "https://i.ebayimg.com/images/g/5IAAAOSw2LZaaCVx/s-l640.jpg";
         }else if(key.equals("LG")){
-            url = "https://media.tracfone.com/wps/contenthandle";
+            url = "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/5792/5792910cv12d.jpg";
+        }else if(key.equals("3Estrellas")){
+            url = "http://www.balance-f.com/es/wp-content/uploads/2014/09/Captura-de-pantalla-2016-07-30-a-las-11.39.09-p.m..png";
+        }else if(key.equals("4Estrellas")){
+            url = "http://www.balance-f.com/es/wp-content/uploads/2014/09/Captura-de-pantalla-2016-07-30-a-las-11.38.57-p.m..png";
+        }else if(key.equals("5Estrellas")){
+            url = "https://previews.123rf.com/images/alexlmx/alexlmx1608/alexlmx160800387/61751490-concepto-de-5-estrellas-representaci%C3%B3n-3d-aisladas-sobre-fondo-blanco.jpg";
+        }else if(key.equals("Cartagena")){
+            url = "https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/09/07/16/cartagena-de-indias-cortesa-procolombia.jpg";
+        }else if(key.equals("Medellin")){
+            url = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Metro_de_Medell%C3%ADn%2C_Colombia.jpg/1200px-Metro_de_Medell%C3%ADn%2C_Colombia.jpg";
+        }else if(key.equals("San Andres")){
+            url = "https://www.elespectador.com/sites/default/files/san_andres_4_0.jpg";
         }
 
         return url;

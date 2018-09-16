@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 
 public class ProdDes extends AppCompatActivity {
     ImageView im;
@@ -50,7 +49,7 @@ public class ProdDes extends AppCompatActivity {
         t.setText("El producto "+nombre+" cuesta "+puntos+" puntos");
         d.setText(des);
         im = findViewById(R.id.imageView2);
-        Picasso.get().load(url).into(im);
+        //Picasso.get().load(url).into(im);
 
     }
 }
