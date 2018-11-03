@@ -5,20 +5,20 @@
         <item
             android:id="@+id/nav_puntos"
             android:icon="@drawable/ic_bubble_chart_black_24dp"
-            android:title="Puntos"
+            android:title="Inicio"
             />
         <item
             android:id="@+id/nav_scotty"
             android:icon="@drawable/ic_face_black_24dp"
-            android:title="Scotty" />
+            android:title="Chat" />
         <item
             android:id="@+id/nav_catalogo"
             android:icon="@drawable/ic_view_carousel_black_24dp"
-            android:title="Catálogo" />
+            android:title="Reportar" />
         <item
             android:id="@+id/nav_historial"
             android:icon="@drawable/ic_timeline_black_24dp"
-            android:title="Historial" />
+            android:title="Trabajos" />
     </group>
 
     <item android:title="Communicate">
@@ -30,7 +30,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Send" />
+                android:title="Redes sociales" />
         </menu>
     </item>
 

@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String puntos;
     private String nombre;
     private String apellido;
+    private String pene;
 
     catalog fragmentCatalog = new catalog();
 
